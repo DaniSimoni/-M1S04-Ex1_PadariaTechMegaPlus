@@ -24,22 +24,153 @@ Defina um método fecharConta, no qual você passa o dinheiro e ele calcula o tr
 
 
 class CaixaRegistradora {
-    constructor(codigoBarra, preco, nome) {
-        this.codigoBarra
-        this.preco
-        this.nome
-        
-
- if(this.constructor === CaixaRegistradora){
-            throw new Error('Classe abstrata, não pode ser instanciada.')
+    constructor() {
+      this.estoque = [];
+      this.caixa = [];
+      this.clienteAtual = null;
     }
-}
-get tipo() {
-    throw new Error('Metodo abstrato, precisa ser implementado')
+  
+    adicionarProduto(codigoBarra, preco, nome) {
+      const novoProduto = { codigoBarra, preco, nome };
+      this.estoque.push(novoProduto);
+    }
+  
+    iniciarAtendimento(cliente) {
+      this.clienteAtual = cliente;
+      this.caixa = [];
+      console.log(`Iniciando atendimento para ${cliente}`);
+    }
+  
+    adicionarItem(codigoBarra, quantidade) {
+      const produto = this.estoque.find((p) => p.codigoBarra === codigoBarra);
+      if (!produto) {
+        console.log(`Produto não encontrado com código de barras ${codigoBarra}`);
+        return;
+      }
+      const item = { produto, quantidade };
+      this.caixa.push(item);
+      console.log(`Adicionando ${quantidade}x ${produto.nome} na caixa registradora`);
+    }
+  
+    calcularValorTotal() {
+      let total = 0;
+      this.caixa.forEach((item) => {
+        const { produto, quantidade } = item;
+        total += produto.preco * quantidade;
+      });
+      console.log(`Valor total da conta de ${this.clienteAtual}: R$${total.toFixed(2)}`);
+      return total;
+    }
+  
+    fecharConta(dinheiro) {
+      const total = this.calcularValorTotal();
+      const troco = dinheiro - total;
+      if (troco < 0) {
+        console.log(`Dinheiro insuficiente para pagar a conta de R$${total.toFixed(2)}`);
+        return;
+      }
+      console.log(`Troco: R$${troco.toFixed(2)}`);
+      this.caixa = [];
+    }
+  }
+  
+  
+  const caixa = new CaixaRegistradora();
+  caixa.adicionarProduto(123, 10.99, 'Arroz');
+  caixa.adicionarProduto(456, 5.49, 'Feijão');
+  caixa.iniciarAtendimento('João');
+  caixa.adicionarItem(123, 2);
+  caixa.adicionarItem(456, 1);
+  caixa.calcularValorTotal(); 
+  caixa.fecharConta(30); 
+  caixa.calcularValorTotal(); 
+  
+
+
+
+
+
+
+
+
+
+
+
+/* 
+class CaixaRegistradora {
+    constructor() {
+      this.estoque = [];
+    }
+  
+    adicionarProduto(codigoBarra, preco, nome) {
+      const novoProduto = { codigoBarra, preco, nome };
+      this.estoque.push(novoProduto);
+    }
+  }
+  
+  // Exemplo de uso:
+  const caixa = new CaixaRegistradora();
+  caixa.adicionarProduto(123, 10.99, 'Arroz');
+  caixa.adicionarProduto(456, 5.49, 'Feijão');
+  console.log(caixa.estoque);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */
+
+
+/* class CaixaRegistradora {
+    codigoBarra;
+    preco;
+    nome;
+
+    constructor(codigoBarra, preco, nome) {
+        this.codigoBarra = codigoBarra;
+        this.preco = preco;
+        this.nome = nome;
+    } 
+
+    adicionar (produto) {
+        this.codigoBarra = codigoBarra;
+        this.preco = preco;
+        this.nome = nome;
+    
 }
 
-}
 
+};
+
+const bolo = new CaixaRegistradora(1524, 10, bolo);
+bolo.adicionar(); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 class NovoProduto extends CaixaRegistradora {
     constructor(codigoBarra, anoFabricacao, nome, preco){
     super(codigoBarra, anoFabricacao, nome)
@@ -48,10 +179,30 @@ class NovoProduto extends CaixaRegistradora {
     get tipo() {
         return 'novoproduto'
     }
-}console.log(NovoProduto.value)
+}console.log(NovoProduto.value) */
 
 
-let estoque = [
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* let estoque = [
     { codigoBarra: 6532, anoFabricacao: 2022, nome: 'Bolo', preco: 5 },
     { codigoBarra: 9851, anoFabricacao: 2022, nome: 'Biscoito', preco: 15 },
     { codigoBarra: 1256, anoFabricacao: 2022, nome: 'Pão', preco: 12 },
@@ -90,9 +241,9 @@ function registroProduto() {
         event.preventDefault();
     });
         console.log(`Preço: ${novoPreco}`);
-        /* return registroProduto(); */
+        /* return registroProduto(); 
         
-};
+}; */
 
 
 
@@ -136,7 +287,7 @@ class NovoProduto extends Produto {
     }
 }; 
  */
-
+/* 
 
 function registradora() {
 
@@ -199,7 +350,7 @@ function registradora() {
 
 
 
-
+ */
 
 
 
